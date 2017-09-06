@@ -27,9 +27,14 @@ module.exports = {
         options: {
           extractCSS: true,
           preserveWhitespace: false,
-          loaders: {
+          loaders: isProd ? {
+            css: ExtractTextPlugin.extract({
+              use: 'css-loader',
+              fallback: 'vue-style-loader',
+            })
+          } : {
+            css: 'vue-style-loader!css-loader'
           }
-          // other vue-loader options go here
         }
       },
       {
