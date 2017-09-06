@@ -33,7 +33,7 @@ import {
   ServerStreamingEchoResponse,
 } from './proto/echo_pb'
 
-const host = 'http://localhost:8080'
+const host = ''
 
 @Component
 export default class App extends Vue {

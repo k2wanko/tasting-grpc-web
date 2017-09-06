@@ -2,5 +2,15 @@ runtime: go
 api_version: go1.8
 
 handlers:
+- url: /
+  static_files: app/index.html
+  upload: app/index\.html$
+  secure: always
+- url: /(.+(\.html|\.js|\.css))$
+  static_files: app/\1
+  upload: app/(.+(\.html|\.js|\.css))$
+  expiration: 10m
+  secure: always
 - url: /.*
   script: _go_app
+  secure: always

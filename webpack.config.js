@@ -86,7 +86,7 @@ if (process.env.NODE_ENV === 'production') {
   ])
 }
 
-module.exports.plugins = (module.exports.plugins || [
+module.exports.plugins = (module.exports.plugins || []).concat([
   new HtmlWebpackPlugin({
     template: 'src/index.html',
     inject: 'body',
@@ -94,4 +94,4 @@ module.exports.plugins = (module.exports.plugins || [
       collapseWhitespace: isProd,
     }
   }),
-]).concat()
+])
