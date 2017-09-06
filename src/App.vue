@@ -27,7 +27,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 
 import { grpc, Code, Metadata } from 'grpc-web-client'
-import { EchoService } from './proto/echo_pb_service'
+import { EchoSerivce } from './proto/echo.grpc.pb'
 import {
   EchoRequest,
   EchoResponse,
