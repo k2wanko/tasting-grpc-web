@@ -12,7 +12,9 @@
       <div>
         <h2>EchoSerivce.ServerStreamingEcho</h2>
         Request: <input type="text" placeholder="message" v-model="echoReq"><input type="number" placeholder="count" v-model="echoReqCount"><input type="number" placeholder="interval" v-model="echoReqInterval"><br> Result:
-        <span>{{echoRes}}</span><br>
+        <div>
+          <span :key="i" v-for="(v, i) in echoStreamRes">{{v}}<br></span>
+        </div><br>
         <button @click="streamingEcho(echoReq, echoReqCount, echoReqInterval)">echo</button>
       </div>
 
@@ -41,6 +43,7 @@ export default class App extends Vue {
   echoReqCount = 10
   echoReqInterval = 1
   echoRes = ""
+  echoStreamRes: string[] = []
 
   mounted() {
   }
@@ -69,12 +72,14 @@ export default class App extends Vue {
     request.setMessage(message)
     request.setMessageCount(count)
     request.setMessageInterval(interval)
+    this.echoStreamRes.splice(0, this.echoStreamRes.length)
     const client = grpc.invoke(EchoService.ServerStreamingEcho, {
       debug: true,
       request,
       host,
       onMessage: (message: ServerStreamingEchoResponse) => {
         console.log('EchoService.ServerStreamingEcho', message.getMessage())
+        this.echoStreamRes.push(message.getMessage())
       },
       onEnd: (code) => {
       }
