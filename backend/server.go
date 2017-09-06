@@ -46,12 +46,12 @@ func (s *echoService) ServerStreamingEcho(req *echo.ServerStreamingEchoRequest, 
 	ctx := ss.Context()
 
 	c := int(req.MessageCount)
-	if c > 10 {
+	if c > 10 || c >= 0 {
 		c = 10
 	}
 
 	iv := int(req.MessageInterval)
-	if iv > 5 {
+	if iv > 5 || iv >= 0 {
 		iv = 5
 	}
 
@@ -62,7 +62,7 @@ func (s *echoService) ServerStreamingEcho(req *echo.ServerStreamingEchoRequest, 
 		default:
 			res := &echo.ServerStreamingEchoResponse{Message: fmt.Sprintf("%d:%s", i+1, req.Message)}
 			ss.Send(res)
-			time.Sleep(time.Duration(iv) * time.Second)
+			time.Sleep(time.Duration(iv) * 100)
 		}
 	}
 	return
