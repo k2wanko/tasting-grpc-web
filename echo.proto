@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package grpc.gateway.testing.echo;
+package grpc.testing.echo;
 option go_package = "echo";
 
 message Empty {

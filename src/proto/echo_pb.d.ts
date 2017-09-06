@@ -1,4 +1,4 @@
-// package: grpc.gateway.testing.echo
+// package: grpc.testing.echo
 // file: echo.proto
 
 import * as jspb from "google-protobuf";

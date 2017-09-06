@@ -10,10 +10,10 @@
       </div>
 
       <div>
-        <h2>EchoSerivce.Echo</h2>
-        Request: <input type="text" placeholder="message" v-model="echoReq"><br> Result:
+        <h2>EchoSerivce.ServerStreamingEcho</h2>
+        Request: <input type="text" placeholder="message" v-model="echoReq"><input type="number" placeholder="count" v-model="echoReqCount"><input type="number" placeholder="interval" v-model="echoReqInterval"><br> Result:
         <span>{{echoRes}}</span><br>
-        <button @click="echo(echoReq)">echo</button>
+        <button @click="streamingEcho(echoReq, echoReqCount, echoReqInterval)">echo</button>
       </div>
 
     </div>
@@ -29,6 +29,8 @@ import { EchoService } from './proto/echo_pb_service'
 import {
   EchoRequest,
   EchoResponse,
+  ServerStreamingEchoRequest,
+  ServerStreamingEchoResponse,
 } from './proto/echo_pb'
 
 const host = 'http://localhost:8080'
@@ -36,6 +38,8 @@ const host = 'http://localhost:8080'
 @Component
 export default class App extends Vue {
   echoReq = ""
+  echoReqCount = 10
+  echoReqInterval = 1
   echoRes = ""
 
   mounted() {
@@ -58,6 +62,24 @@ export default class App extends Vue {
       console.log('EchoService.Echo', res.getMessage())
       this.echoRes = res.getMessage()
     })
+  }
+
+  streamingEcho(message: string, count: number, interval: number) {
+    const request = new ServerStreamingEchoRequest()
+    request.setMessage(message)
+    request.setMessageCount(count)
+    request.setMessageInterval(interval)
+    const client = grpc.invoke(EchoService.ServerStreamingEcho, {
+      debug: true,
+      request,
+      host,
+      onMessage: (message: ServerStreamingEchoResponse) => {
+        console.log('EchoService.ServerStreamingEcho', message.getMessage())
+      },
+      onEnd: (code) => {
+      }
+    })
+
   }
 }
 </script>

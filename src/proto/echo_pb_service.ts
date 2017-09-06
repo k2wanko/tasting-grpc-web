@@ -1,9 +1,9 @@
-// package: grpc.gateway.testing.echo
+// package: grpc.testing.echo
 // file: echo.proto
 
 import * as echo_pb from "./echo_pb";
 export class EchoService {
-  static serviceName = "grpc.gateway.testing.echo.EchoService";
+  static serviceName = "grpc.testing.echo.EchoService";
 }
 export namespace EchoService {
   export class Echo {
